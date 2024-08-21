@@ -1,9 +1,8 @@
 import { useGetIssues } from '@/services/queries';
-import { GetServerSideProps } from 'next';
 import React from 'react';
 
 const IssuesList: React.FC = () => {
-  const { data, isLoading, isError } = useGetIssues({ enabled: true });
+  const { data, isLoading, isError } = useGetIssues({ enabled: true, staleTime: 60 });
 
   console.log(data, isLoading, isError);
 
