@@ -20,6 +20,7 @@ export const useGetIssues = (
     {
       enabled: opts?.enabled || false,
       retry: opts?.retry || false,
+      staleTime: opts?.staleTime || 0,
     }
   );
 };
