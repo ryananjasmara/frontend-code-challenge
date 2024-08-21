@@ -20,15 +20,32 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
 async function getIssues(req: NextApiRequest, res: NextApiResponse) {
   try {
+    const { page = '1', limit = '10' } = req.query;
+    const pageNumber = parseInt(page as string, 10);
+    const limitNumber = parseInt(limit as string, 10);
+    const skip = (pageNumber - 1) * limitNumber;
+
     const collection = await IssueCollection();
-    const issues = await collection.find({}).toArray();
-    res.status(200).json({ data: issues });
+    const issues = await collection.find({})
+      .skip(skip)
+      .limit(limitNumber)
+      .toArray();
+    const totalIssues = await collection.countDocuments();
+
+    res.status(200).json({ 
+      data: issues,
+      meta: {
+        page: pageNumber,
+        limit: limitNumber,
+        total: totalIssues,
+        totalPage: Math.ceil(totalIssues / limitNumber), 
+      }
+    });
   } catch (error) {
     console.error('Error fetching issues:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 }
-
 
 async function createIssue(req: NextApiRequest, res: NextApiResponse) {
   try {
@@ -48,7 +65,6 @@ async function deleteIssue(req: NextApiRequest, res: NextApiResponse) {
     const { id } = req.query;
     const collection = await IssueCollection();
     const result = await collection.deleteOne({ _id: new ObjectId(id as string) });
-
     if (result.deletedCount === 1) {
       res.status(200).json({ message: 'Issue deleted successfully' });
     } else {
@@ -63,14 +79,13 @@ async function deleteIssue(req: NextApiRequest, res: NextApiResponse) {
 async function updateIssue(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { id } = req.query;
-    const updateData = req.body;
+    const { imageUri, title, issueNumber, issueDate } = req.body;
     const collection = await IssueCollection();
     const result = await collection.updateOne(
       { _id: new ObjectId(id as string) },
-      { $set: updateData }
+      { $set: { imageUri, title, issueNumber, issueDate } }
     );
-
-    if (result.matchedCount === 1) {
+    if (result.modifiedCount === 1) {
       res.status(200).json({ message: 'Issue updated successfully' });
     } else {
       res.status(404).json({ message: 'Issue not found' });
