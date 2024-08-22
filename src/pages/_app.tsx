@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import React from 'react';
 import '../app/globals.css';
 import IssuesProvider from '@/pages/contexts/Issues.context';
-import { ToastProvider } from '@/pages/contexts/Toast.context';
+import ToastProvider from '@/pages/contexts/Toast.context';
 
 const queryClient = new QueryClient({
   defaultOptions: {
