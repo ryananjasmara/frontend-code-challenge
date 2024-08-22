@@ -1,0 +1,19 @@
+.toast-container {
+  @apply fixed bottom-4 right-4 text-white p-4 rounded shadow-lg;
+}
+
+.toast-success {
+  @apply bg-green-500;
+}
+
+.toast-warning {
+  @apply bg-yellow-500;
+}
+
+.toast-error {
+  @apply bg-red-500;
+}
+
+.toast-default {
+  @apply bg-gray-800;
+}
