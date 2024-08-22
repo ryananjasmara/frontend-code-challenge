@@ -2,7 +2,7 @@ import { AppProps } from 'next/app';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import React from 'react';
 import '../app/globals.css';
-import { IssuesProvider } from '@/contexts/Issues.context';
+import { IssuesProvider } from '@/pages/contexts/Issues.context';
 
 const queryClient = new QueryClient({
   defaultOptions: {

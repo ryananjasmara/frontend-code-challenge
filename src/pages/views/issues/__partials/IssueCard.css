@@ -1,0 +1,27 @@
+.card {
+  @apply bg-white rounded-lg shadow-md overflow-hidden relative;
+}
+
+.card-issue-number {
+  @apply absolute top-2 left-2 z-10 bg-white text-black text-base font-semibold px-2 py-0 rounded-full;
+}
+
+.card-image-container {
+  @apply relative w-full h-64;
+}
+
+.card-content {
+  @apply p-4 flex justify-between items-center;
+}
+
+.card-title {
+  @apply text-lg font-bold;
+}
+
+.card-date {
+  @apply text-gray-500;
+}
+
+.card-buttons {
+  @apply flex space-x-2;
+}
