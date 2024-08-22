@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from 'axios';
 export abstract class HttpServices {
     protected static async get<DataResponse = any>(url: string, config?: any): Promise<AxiosResponse> {
         try {
-            const response = await axios.get(`${url}`);
+            const response = await axios.get(`${url}`, config);
             return response;
         } catch (error: any) {
             throw new Error(error.message);
@@ -28,9 +28,9 @@ export abstract class HttpServices {
         }
     }
 
-    protected static async del<DataResponse = any>(url: string): Promise<AxiosResponse> {
+    protected static async delete<DataResponse = any>(url: string, config?: any): Promise<AxiosResponse> {
         try {
-            const response = await axios.delete(`${url}`);
+            const response = await axios.delete(`${url}`, config);
             return response;
         } catch (error: any) {
             throw new Error(error.message);
