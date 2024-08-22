@@ -23,7 +23,6 @@
   ],
   "rules": {
     "indent": ["error", 2],
-    "linebreak-style": ["error", "windows"],
     "max-len": ["error", { "code": 200 }],
     "quotes": ["error", "single"],
     "semi": ["error", "always"],

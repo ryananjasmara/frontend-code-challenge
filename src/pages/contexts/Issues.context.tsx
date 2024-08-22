@@ -1,6 +1,6 @@
 import { IIssue } from '@/models/Issues';
 import { createContext, useState, useContext, Dispatch, SetStateAction } from 'react';
-import { FilterData } from '@/pages/views/issues/__partials/FilterModal.type';
+import { IFilterData } from '@/pages/views/issues/__partials/FilterModal';
 
 interface ModalDeleteDataProps {
     isOpen: boolean;
@@ -12,7 +12,7 @@ interface ModalDeleteDataProps {
 
 interface ModalFilterDataProps {
     isOpen: boolean;
-    filterData: FilterData;
+    filterData: IFilterData;
 }
 
 interface IssuesStateContextProps {
@@ -82,4 +82,6 @@ const useIssuesContext = () => {
   return { stateContext, eventContext };
 };
 
-export { IssuesProvider, useIssuesContext };
+export { useIssuesContext };
+
+export default IssuesProvider;

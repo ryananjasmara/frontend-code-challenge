@@ -13,7 +13,7 @@ interface Props {
   onRemove: () => void;
 }
 
-export const IssueCard: React.FC<Props> = (props) => {
+const IssueCard: React.FC<Props> = (props) => {
   return (
     <div className="card">
       <div className="card-issue-number">
@@ -51,3 +51,5 @@ export const IssueCard: React.FC<Props> = (props) => {
     </div>
   );
 };
+
+export default IssueCard;
