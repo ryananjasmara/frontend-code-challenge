@@ -16,17 +16,9 @@ interface Props {
 const IssueCard: React.FC<Props> = (props) => {
   return (
     <div className="card">
-      <div className="card-issue-number">
-        #{props.issueNumber}
-      </div>
+      <div className="card-issue-number">#{props.issueNumber}</div>
       <div className="card-image-container">
-        <Image
-          src={props.imageUri}
-          alt={props.title}
-          layout="fill"
-          objectFit="cover"
-          className="rounded-t-lg"
-        />
+        <img src={props.imageUri} className="card-image" />
       </div>
       <div className="card-content">
         <div>
