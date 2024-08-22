@@ -1,7 +1,7 @@
 import React from 'react';
 import './IssueCardSkeleton.css';
 
-export const IssueCardSkeleton: React.FC = () => {
+const IssueCardSkeleton: React.FC = () => {
   return (
     <div className="card-skeleton">
       <div className="badge"></div>
@@ -19,3 +19,5 @@ export const IssueCardSkeleton: React.FC = () => {
     </div>
   );
 };
+
+export default IssueCardSkeleton;

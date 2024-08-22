@@ -9,10 +9,9 @@ import {
   ArrowRightIcon
 } from '@heroicons/react/24/solid';
 import { useDebounce } from '@/shared/utils';
-import { IssueCard } from './__partials/IssueCard';
-import { IssueCardSkeleton } from './__partials/IssueCardSkeleton';
-import { FilterModal } from './__partials/FilterModal';
-import { FilterData } from './__partials/FilterModal.type';
+import IssueCard from './__partials/IssueCard';
+import IssueCardSkeleton from './__partials/IssueCardSkeleton';
+import FilterModal, { IFilterData } from './__partials/FilterModal';
 
 const IssuesPage: React.FC = () => {
   const [keyword, setKeyword] = useState('');
@@ -69,7 +68,7 @@ const IssuesPage: React.FC = () => {
     });
   };
 
-  const handleApplyFilter = (filters: FilterData) => {
+  const handleApplyFilter = (filters: IFilterData) => {
     setModalFilterData({
       isOpen: false,
       filterData: filters,
