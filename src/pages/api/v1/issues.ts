@@ -4,17 +4,21 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
-  case 'GET':
-    return getIssues(req, res);
-  case 'POST':
-    return createIssue(req, res);
-  case 'DELETE':
-    return deleteIssue(req, res);
-  case 'PUT':
-    return updateIssue(req, res);
-  default:
-    res.setHeader('Allow', ['GET', 'POST', 'DELETE', 'PUT']);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
+    case 'GET':
+      if (req.query.id) {
+        return getDetail(req, res);
+      } else {
+        return getIssues(req, res);
+      }
+    case 'POST':
+      return createIssue(req, res);
+    case 'DELETE':
+      return deleteIssue(req, res);
+    case 'PUT':
+      return updateIssue(req, res);
+    default:
+      res.setHeader('Allow', ['GET', 'POST', 'DELETE', 'PUT']);
+      res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
 
@@ -36,10 +40,10 @@ async function getIssues(req: NextApiRequest, res: NextApiResponse) {
       return res.status(400).json({ message: 'Invalid order parameter' });
     }
 
-    let sortField = 'issueNumber';
+    let sortField = 'issueDate';
     if (sortBy) {
-      if (sortBy === 'date') {
-        sortField = 'issueDate';
+      if (sortBy === 'issueNumber') {
+        sortField = 'issueNumber';
       } else {
         sortField = sortBy as string;
       }
@@ -73,6 +77,27 @@ async function getIssues(req: NextApiRequest, res: NextApiResponse) {
     });
   } catch (error) {
     console.error('Error fetching issues:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
+async function getDetail(req: NextApiRequest, res: NextApiResponse) {
+  try {
+    const { id } = req.query;
+    if (!ObjectId.isValid(id as string)) {
+      return res.status(400).json({ message: 'Invalid issue ID' });
+    }
+
+    const collection = await IssueCollection();
+    const issue = await collection.findOne({ _id: new ObjectId(id as string) });
+
+    if (!issue) {
+      return res.status(404).json({ message: 'Issue not found' });
+    }
+
+    res.status(200).json({ data: issue });
+  } catch (error) {
+    console.error('Error fetching issue detail:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 }
