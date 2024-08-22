@@ -1,5 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useDeleteIssue, useGetIssues } from '@/services/queries';
+import {
+  useCreateIssue,
+  useDeleteIssue,
+  useGetIssues,
+  useUpdateIssue
+} from '@/services/queries';
 import { Button, ConfirmationModal, EmptyData } from '@/shared/components';
 import { useIssuesContext } from '@/pages/contexts/Issues.context';
 import { IIssue } from '@/models/Issues';
@@ -12,6 +17,10 @@ import { useDebounce } from '@/shared/utils';
 import IssueCard from './__partials/IssueCard';
 import IssueCardSkeleton from './__partials/IssueCardSkeleton';
 import FilterModal, { IFilterData } from './__partials/FilterModal';
+import CreateModal from './__partials/CreateModal';
+import { CreateIssuePayload, UpdateIssuePayload } from '@/services/types';
+import EditModal from './__partials/EditModal';
+import { useToast } from '@/pages/contexts/Toast.context';
 
 const IssuesPage: React.FC = () => {
   const [keyword, setKeyword] = useState('');
@@ -19,13 +28,23 @@ const IssuesPage: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
+  const { showToast } = useToast();
+
   const {
-    stateContext: { modalDeleteData, modalFilterData },
+    stateContext: {
+      modalDeleteData,
+      modalFilterData,
+      modalCreateData,
+      modalEditData
+    },
     eventContext: {
       setModalDeleteData,
       setModalFilterData,
+      setModalCreateData,
+      setModalEditData,
       handleResetModalDeleteData,
-      handleResetModalFilterData
+      handleResetModalCreateData,
+      handleResetModalEditData
     }
   } = useIssuesContext();
 
@@ -42,6 +61,8 @@ const IssuesPage: React.FC = () => {
   });
 
   const deleteIssueMutation = useDeleteIssue();
+  const createIssueMutation = useCreateIssue();
+  const updateIssueMutation = useUpdateIssue();
 
   useEffect(() => {
     if (data) {
@@ -75,12 +96,33 @@ const IssuesPage: React.FC = () => {
     });
   };
 
-  const handleOpenModalEdit = () => {};
+  const handleOpenModalCreate = () => {
+    setModalCreateData({
+      isOpen: true
+    });
+  };
+
+  const handleCreateNewIssue = (payload: CreateIssuePayload) => {
+    createIssueMutation.mutate(payload);
+    handleResetModalCreateData();
+  };
+
+  const handleOpenModalEdit = (issueId: string) => {
+    setModalEditData({
+      isOpen: true,
+      issueId
+    });
+  };
+
+  const handleSubmitEdit = (payload: UpdateIssuePayload) => {
+    updateIssueMutation.mutate(payload);
+    handleResetModalEditData();
+  };
 
   const handleOpenModalDelete = (issue: IIssue) => {
     setModalDeleteData({
       isOpen: true,
-      issue,
+      issue
     });
   };
 
@@ -101,7 +143,7 @@ const IssuesPage: React.FC = () => {
               title="Create New Issue"
               backgroundColor="blue"
               type="text"
-              onClick={() => {}}
+              onClick={handleOpenModalCreate}
             />
           </div>
           <div className="flex justify-between space-x-3">
@@ -151,7 +193,7 @@ const IssuesPage: React.FC = () => {
                   title={issue.title}
                   issueDate={issue.issueDate}
                   imageUri={issue.imageUri}
-                  onEdit={() => handleOpenModalEdit()}
+                  onEdit={() => handleOpenModalEdit(issue._id.toString())}
                   onRemove={() => handleOpenModalDelete(issue)}
                 />
               ))}
@@ -182,13 +224,25 @@ const IssuesPage: React.FC = () => {
         {...modalDeleteData}
         onCancel={handleResetModalDeleteData}
         onConfirm={handleConfirmDelete}
-        title='Confirm Deletion'
+        title="Confirm Deletion"
         description={`Are you sure you want to delete ${modalDeleteData.issue?.title}?`}
       />
       <FilterModal
         {...modalFilterData}
-        onClose={handleResetModalFilterData}
+        onClose={() =>
+          setModalFilterData({ ...modalFilterData, isOpen: false })
+        }
         onConfirm={handleApplyFilter}
+      />
+      <CreateModal
+        {...modalCreateData}
+        onClose={handleResetModalCreateData}
+        onCreate={handleCreateNewIssue}
+      />
+      <EditModal
+        {...modalEditData}
+        onClose={handleResetModalEditData}
+        onEdit={handleSubmitEdit}
       />
     </div>
   );
