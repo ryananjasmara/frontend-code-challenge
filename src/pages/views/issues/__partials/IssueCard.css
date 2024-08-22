@@ -10,6 +10,10 @@
   @apply relative w-full h-64;
 }
 
+.card-image {
+  @apply w-full h-full object-cover;
+}
+
 .card-content {
   @apply p-4 flex justify-between items-center;
 }

@@ -18,12 +18,20 @@
   @apply bg-blue-600;
 }
 
+.button-container.blue.disabled {
+  @apply bg-blue-300;
+}
+
 .button-container.red {
   @apply bg-red-500;
 }
 
 .button-container.red:hover {
   @apply bg-red-600;
+}
+
+.button-container.red.disabled {
+  @apply bg-red-300;
 }
 
 .button-container.green {
@@ -34,12 +42,20 @@
   @apply bg-green-600;
 }
 
+.button-container.green.disabled {
+  @apply bg-green-300;
+}
+
 .button-container.yellow {
   @apply bg-yellow-500;
 }
 
 .button-container.yellow:hover {
   @apply bg-yellow-600;
+}
+
+.button-container.yellow.disabled {
+  @apply bg-yellow-300;
 }
 
 .button-container.neutral {
@@ -50,6 +66,10 @@
   @apply bg-neutral-300;
 }
 
+.button-container.neutral.disabled {
+  @apply bg-neutral-100;
+}
+
 .button-container.disabled {
-  @apply bg-gray-500 cursor-not-allowed;
+  @apply cursor-not-allowed;
 }
