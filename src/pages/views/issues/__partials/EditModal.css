@@ -1,0 +1,31 @@
+.edit-modal-overlay {
+  @apply fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10;
+}
+
+.edit-modal-container {
+  @apply bg-white p-6 rounded-lg shadow-lg w-96;
+}
+
+.edit-modal-header {
+  @apply text-xl font-bold mb-4;
+}
+
+.edit-modal-button-container {
+  @apply flex justify-end space-x-2;
+}
+
+.edit-modal-image {
+  @apply w-12 h-12 rounded-lg mb-4 w-full h-auto;
+}
+
+.edit-modal-skeleton-header {
+  @apply h-6 bg-gray-300 animate-pulse w-1/2 mb-3 rounded-md;
+}
+
+.edit-modal-skeleton-textfield {
+  @apply h-10 bg-gray-300 animate-pulse mb-3 rounded-md;
+}
+
+.edit-modal-skeleton-image {
+  @apply h-64 bg-gray-300 animate-pulse mb-3 rounded-md;
+}

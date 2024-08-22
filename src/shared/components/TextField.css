@@ -1,0 +1,11 @@
+.textfield-container {
+  @apply mb-4;
+}
+
+.textfield-label {
+  @apply block text-gray-700;
+}
+
+.textfield-input {
+  @apply w-full p-2 border rounded-lg;
+}
