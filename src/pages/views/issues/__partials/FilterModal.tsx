@@ -6,13 +6,13 @@ export interface IFilterData {
   sortBy: string;
   order: string;
 }
-interface FilterModalProps {
+interface Props {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: (filters: IFilterData) => void;
 }
 
-const FilterModal: React.FC<FilterModalProps> = (props) => {
+const FilterModal: React.FC<Props> = (props) => {
   const [sortBy, setSortBy] = React.useState('');
   const [order, setOrder] = React.useState('');
 

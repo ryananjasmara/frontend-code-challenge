@@ -2,7 +2,7 @@ import React from 'react';
 import './ConfirmationModal.css';
 import { Button } from './Button';
 
-interface ConfirmationModalProps {
+interface Props {
   title: string;
   description: string;
   onConfirm: () => void;
@@ -12,7 +12,7 @@ interface ConfirmationModalProps {
   isOpen: boolean;
 }
 
-export const ConfirmationModal: React.FC<ConfirmationModalProps> = (props) => {
+export const ConfirmationModal: React.FC<Props> = (props) => {
   if (!props.isOpen) return null;
 
   return (
