@@ -17,7 +17,7 @@ const IssueCard: React.FC<Props> = (props) => {
     <div className="card">
       <div className="card-issue-number">#{props.issueNumber}</div>
       <div className="card-image-container">
-        <img src={props.imageUri} className="card-image" />
+        <img src={props.imageUri} alt={props.title} className="card-image" />
       </div>
       <div className="card-content">
         <div>
