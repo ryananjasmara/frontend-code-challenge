@@ -1,0 +1,55 @@
+.button-container {
+  @apply text-white px-4 py-2 rounded-md transition-all duration-200;
+}
+
+.button-container:hover {
+  opacity: 0.75;
+}
+
+.button-container:active {
+  @apply bg-gray-500;
+}
+
+.button-container.blue {
+  @apply bg-blue-500;
+}
+
+.button-container.blue:hover {
+  @apply bg-blue-600;
+}
+
+.button-container.red {
+  @apply bg-red-500;
+}
+
+.button-container.red:hover {
+  @apply bg-red-600;
+}
+
+.button-container.green {
+  @apply bg-green-500;
+}
+
+.button-container.green:hover {
+  @apply bg-green-600;
+}
+
+.button-container.yellow {
+  @apply bg-yellow-500;
+}
+
+.button-container.yellow:hover {
+  @apply bg-yellow-600;
+}
+
+.button-container.neutral {
+  @apply bg-neutral-200 text-black;
+}
+
+.button-container.neutral:hover {
+  @apply bg-neutral-300;
+}
+
+.button-container.disabled {
+  @apply bg-gray-500 cursor-not-allowed;
+}

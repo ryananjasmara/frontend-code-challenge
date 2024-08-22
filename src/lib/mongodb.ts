@@ -22,7 +22,7 @@ if (!MONGODB_PASS) {
 }
 
 declare const global: {
-  mongo: { conn: any; promise: any };
+  mongo: { conn: unknown; promise: unknown };
 };
 
 let cached = global.mongo;
