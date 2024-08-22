@@ -5,9 +5,6 @@ import { IFilterData } from '@/pages/views/issues/__partials/FilterModal';
 interface ModalDeleteDataProps {
     isOpen: boolean;
     issue: IIssue | null;
-    onConfirm: () => void;
-    title: string;
-    description: string;
 }
 
 interface ModalFilterDataProps {
@@ -30,8 +27,6 @@ interface IssuesEventContextProps {
 const modalDeleteDataInitialValue = {
   isOpen: false,
   issue: null,
-  onCancel: () => { },
-  onConfirm: () => { },
   title: '',
   description: '',
 };

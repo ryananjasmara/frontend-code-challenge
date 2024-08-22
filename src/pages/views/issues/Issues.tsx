@@ -64,24 +64,14 @@ const IssuesPage: React.FC = () => {
   const handleOpenModalFilter = () => {
     setModalFilterData({
       ...modalFilterData,
-      isOpen: true,
+      isOpen: true
     });
   };
 
   const handleApplyFilter = (filters: IFilterData) => {
     setModalFilterData({
       isOpen: false,
-      filterData: filters,
-    });
-  };
-
-  const handleResetFilter = () => {
-    setModalFilterData({
-      ...modalFilterData,
-      filterData: {
-        sortBy: '',
-        order: '',
-      },
+      filterData: filters
     });
   };
 
@@ -91,15 +81,14 @@ const IssuesPage: React.FC = () => {
     setModalDeleteData({
       isOpen: true,
       issue,
-      onConfirm: () => handleConfirmDelete(issue._id.toString()),
-      title: 'Confirm Deletion',
-      description: `Are you sure you want to delete ${issue.title}?`
     });
   };
 
-  const handleConfirmDelete = (id: string) => {
-    deleteIssueMutation.mutate({ id });
-    handleResetModalDeleteData();
+  const handleConfirmDelete = () => {
+    if (modalDeleteData.issue) {
+      deleteIssueMutation.mutate({ id: modalDeleteData.issue?._id.toString() });
+      handleResetModalDeleteData();
+    }
   };
 
   return (
@@ -192,6 +181,9 @@ const IssuesPage: React.FC = () => {
       <ConfirmationModal
         {...modalDeleteData}
         onCancel={handleResetModalDeleteData}
+        onConfirm={handleConfirmDelete}
+        title='Confirm Deletion'
+        description={`Are you sure you want to delete ${modalDeleteData.issue?.title}?`}
       />
       <FilterModal
         {...modalFilterData}
