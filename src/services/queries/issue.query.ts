@@ -14,7 +14,7 @@ export const useGetIssues = (
       IssueService.getIssues(opts.params, signal)
         .then((res) => res?.data)
         .catch((error: any) => {
-          if (error?.code !== "ERR_CANCELED") {
+          if (error?.code !== 'ERR_CANCELED') {
             throw error;
           }
         }),
@@ -34,7 +34,7 @@ export const useDeleteIssue = (): UseMutationResult<DeleteIssueResponse, unknown
     {
       mutationFn: async (params: DeleteIssueParams) => {
         const response = await IssueService.deleteIssue(params);
-        return response.data
+        return response.data;
       },
       onSuccess: () => {
         queryClient.invalidateQueries(ISSUE_QUERY_KEY.getIssues);
@@ -47,4 +47,4 @@ export const useDeleteIssue = (): UseMutationResult<DeleteIssueResponse, unknown
   );
 
   return mutation;
-}
+};

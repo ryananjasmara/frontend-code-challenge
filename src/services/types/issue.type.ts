@@ -9,6 +9,8 @@ export type GetIssuesParams = {
     page: number;
     limit: number;
     keyword?: string;
+    sortBy?: string;
+    order?: string;
 };
 
 export type DeleteIssueParams = {  
