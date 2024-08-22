@@ -17,16 +17,14 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": [
-    "react",
-    "@typescript-eslint"
-  ],
+  "plugins": ["react", "@typescript-eslint"],
   "rules": {
     "indent": ["error", 2],
     "max-len": ["error", { "code": 200 }],
     "quotes": ["error", "single"],
     "semi": ["error", "always"],
     "@typescript-eslint/no-explicit-any": "off",
-    "eol-last": ["error", "always"]
+    "eol-last": ["error", "always"],
+    "@next/next/no-img-element": "off"
   }
 }

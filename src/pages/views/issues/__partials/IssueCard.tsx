@@ -1,5 +1,4 @@
 import { simpleDateFormat } from '@/shared/utils';
-import Image from 'next/image';
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/solid';
 import { Button } from '@/shared/components';
 import './IssueCard.css';

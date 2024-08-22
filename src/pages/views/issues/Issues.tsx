@@ -20,7 +20,6 @@ import FilterModal, { IFilterData } from './__partials/FilterModal';
 import CreateModal from './__partials/CreateModal';
 import { CreateIssuePayload, UpdateIssuePayload } from '@/services/types';
 import EditModal from './__partials/EditModal';
-import { useToast } from '@/pages/contexts/Toast.context';
 
 const IssuesPage: React.FC = () => {
   const [keyword, setKeyword] = useState('');
