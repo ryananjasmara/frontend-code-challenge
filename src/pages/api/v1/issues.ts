@@ -20,17 +20,23 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
 async function getIssues(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const { page = '1', limit = '10' } = req.query;
+    const { page = '1', limit = '10', keyword = '' } = req.query;
     const pageNumber = parseInt(page as string, 10);
     const limitNumber = parseInt(limit as string, 10);
     const skip = (pageNumber - 1) * limitNumber;
 
     const collection = await IssueCollection();
-    const issues = await collection.find({})
+
+    const filter: any = {};
+    if (keyword) {
+      filter.title = { $regex: keyword, $options: 'i' };
+    }
+
+    const issues = await collection.find(filter)
       .skip(skip)
       .limit(limitNumber)
       .toArray();
-    const totalIssues = await collection.countDocuments();
+    const totalIssues = await collection.countDocuments(filter);
 
     res.status(200).json({ 
       data: issues,
