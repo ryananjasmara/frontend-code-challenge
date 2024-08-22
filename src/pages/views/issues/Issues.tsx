@@ -86,7 +86,7 @@ const IssuesPage: React.FC = () => {
     });
   };
 
-  const handleOpenModalEdit = (id: string) => {};
+  const handleOpenModalEdit = () => {};
 
   const handleOpenModalDelete = (issue: IIssue) => {
     setModalDeleteData({
@@ -163,7 +163,7 @@ const IssuesPage: React.FC = () => {
                   title={issue.title}
                   issueDate={issue.issueDate}
                   imageUri={issue.imageUri}
-                  onEdit={() => handleOpenModalEdit(issue._id.toString())}
+                  onEdit={() => handleOpenModalEdit()}
                   onRemove={() => handleOpenModalDelete(issue)}
                 />
               ))}
