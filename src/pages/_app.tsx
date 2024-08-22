@@ -2,6 +2,7 @@ import { AppProps } from 'next/app';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import React from 'react';
 import '../app/globals.css';
+import { IssuesProvider } from '@/pages/contexts/Issues.context';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,7 +16,9 @@ const queryClient = new QueryClient({
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
-      <Component {...pageProps} />
+      <IssuesProvider>
+        <Component {...pageProps} />
+      </IssuesProvider>
     </QueryClientProvider>
   );
 }

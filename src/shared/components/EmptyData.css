@@ -1,0 +1,7 @@
+.empty-data-container {
+  @apply flex items-center justify-center h-full w-full;
+}
+
+.empty-data-text {
+  @apply text-gray-500;
+}
