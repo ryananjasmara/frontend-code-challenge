@@ -28,8 +28,6 @@ const IssuesPage: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  const { showToast } = useToast();
-
   const {
     stateContext: {
       modalDeleteData,
