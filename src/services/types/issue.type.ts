@@ -20,4 +20,3 @@ export type DeleteIssueParams = {
 export type DeleteIssueResponse = {
     message: string;
 };
-
