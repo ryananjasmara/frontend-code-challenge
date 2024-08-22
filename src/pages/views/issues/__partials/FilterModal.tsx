@@ -1,16 +1,19 @@
 import React from 'react';
 import { Dropdown, Button } from '@/shared/components';
-import { FilterData } from './FilterModal.type';
 import './FilterModal.css';
 
+export interface IFilterData {
+  sortBy: string;
+  order: string;
+}
 interface FilterModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: (filters: FilterData) => void;
+  onConfirm: (filters: IFilterData) => void;
   onReset: () => void;
 }
 
-export const FilterModal: React.FC<FilterModalProps> = (props) => {
+const FilterModal: React.FC<FilterModalProps> = (props) => {
   const [sortBy, setSortBy] = React.useState('');
   const [order, setOrder] = React.useState('');
 
@@ -85,3 +88,5 @@ export const FilterModal: React.FC<FilterModalProps> = (props) => {
     </div>
   );
 };
+
+export default FilterModal;

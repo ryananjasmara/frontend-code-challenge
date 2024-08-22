@@ -10,6 +10,6 @@ export interface IIssue {
 }
 
 export const IssueCollection = async (): Promise<Collection<IIssue>> => {
-  const { db } = await connectToDatabase();
+  const { db }: any = await connectToDatabase();
   return db.collection('issues');
 };
