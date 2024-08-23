@@ -6,8 +6,6 @@ import {
   useUpdateIssue
 } from '@/services/queries';
 import { Button, ConfirmationModal, EmptyData } from '@/shared/components';
-import { useIssuesContext } from '@/pages/contexts/Issues.context';
-import { IIssue } from '@/models/Issues';
 import {
   MagnifyingGlassIcon,
   ArrowLeftIcon,
@@ -22,29 +20,27 @@ import { CreateIssuePayload, UpdateIssuePayload } from '@/services/types';
 import EditModal from './__partials/EditModal';
 import './Issues.css';
 
+const testId = 'issues-page';
+
 const IssuesPage: React.FC = () => {
+  // keyword
   const [keyword, setKeyword] = useState('');
   const debounceKeyword = useDebounce(keyword, 1000);
+  // pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-
-  const {
-    stateContext: {
-      modalDeleteData,
-      modalFilterData,
-      modalCreateData,
-      modalEditData
-    },
-    eventContext: {
-      setModalDeleteData,
-      setModalFilterData,
-      setModalCreateData,
-      setModalEditData,
-      handleResetModalDeleteData,
-      handleResetModalCreateData,
-      handleResetModalEditData
-    }
-  } = useIssuesContext();
+  // modal create
+  const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
+  // modal delete
+  const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
+  // modal edit
+  const [isModalEditOpen, setIsModalEditOpen] = useState(false);
+  // modal filter
+  const [isModalFilterOpen, setIsModalFilterOpen] = useState(false);
+  const [sortBy, setSortBy] = useState('');
+  const [order, setOrder] = useState('');
+  // shared
+  const [selectedIssueId, setSelectedIssueId] = useState('');
 
   const { data, isLoading } = useGetIssues({
     enabled: true,
@@ -53,8 +49,8 @@ const IssuesPage: React.FC = () => {
       page: currentPage,
       limit: 10,
       keyword: debounceKeyword,
-      sortBy: modalFilterData.filterData.sortBy,
-      order: modalFilterData.filterData.order
+      sortBy: sortBy,
+      order: order
     }
   });
 
@@ -81,63 +77,94 @@ const IssuesPage: React.FC = () => {
   };
 
   const handleOpenModalFilter = () => {
-    setModalFilterData({
-      ...modalFilterData,
-      isOpen: true
-    });
+    setIsModalFilterOpen(true);
+  };
+
+  const handleCloseModalFilter = () => {
+    setIsModalFilterOpen(false);
   };
 
   const handleApplyFilter = (filters: IFilterData) => {
-    setModalFilterData({
-      isOpen: false,
-      filterData: filters
-    });
+    setSortBy(filters.sortBy);
+    setOrder(filters.order);
+    handleCloseModalFilter();
+  };
+
+  const handleResetFilter = () => {
+    setSortBy('');
+    setOrder('');
   };
 
   const handleOpenModalCreate = () => {
-    setModalCreateData({
-      isOpen: true
-    });
+    setIsModalCreateOpen(true);
+  };
+
+  const handleCloseModalCreate = () => {
+    setIsModalCreateOpen(false);
   };
 
   const handleCreateNewIssue = (payload: CreateIssuePayload) => {
     createIssueMutation.mutate(payload);
-    handleResetModalCreateData();
+    handleCloseModalCreate();
   };
 
   const handleOpenModalEdit = (issueId: string) => {
-    setModalEditData({
-      isOpen: true,
-      issueId
-    });
+    setIsModalEditOpen(true);
+    setSelectedIssueId(issueId);
+  };
+
+  const handleCloseModalEdit = () => {
+    setIsModalEditOpen(false);
+    setSelectedIssueId('');
   };
 
   const handleSubmitEdit = (payload: UpdateIssuePayload) => {
     updateIssueMutation.mutate(payload);
-    handleResetModalEditData();
   };
 
-  const handleOpenModalDelete = (issue: IIssue) => {
-    setModalDeleteData({
-      isOpen: true,
-      issue
-    });
+  const handleOpenModalDelete = (issueId: string) => {
+    setIsModalDeleteOpen(true);
+    setSelectedIssueId(issueId);
+  };
+
+  const handleCloseModalDelete = () => {
+    setIsModalDeleteOpen(false);
+    setSelectedIssueId('');
   };
 
   const handleConfirmDelete = () => {
-    if (modalDeleteData.issue) {
-      deleteIssueMutation.mutate({ id: modalDeleteData.issue?._id.toString() });
-      handleResetModalDeleteData();
-    }
+    deleteIssueMutation.mutate({ id: selectedIssueId });
   };
+
+  useEffect(() => {
+    if (deleteIssueMutation.isSuccess) {
+      setCurrentPage(1);
+      deleteIssueMutation.reset();
+      handleCloseModalDelete();
+    }
+  }, [deleteIssueMutation.isSuccess]);
+
+  useEffect(() => {
+    if (updateIssueMutation.isSuccess) {
+      setCurrentPage(1);
+      updateIssueMutation.reset();
+      handleCloseModalEdit();
+    }
+  }, [updateIssueMutation.isSuccess]);
 
   return (
     <div className="issues-page-container">
       <div className="issues-page-inner-container">
         <div className="issues-page-header">
-          <h1 className="issues-page-title">Past Issues</h1>
+          <h1
+            className="issues-page-title"
+            data-testid={`${testId}.page-title`}
+          >
+            Past Issues
+          </h1>
           <div className="issues-page-button-container">
             <Button
+              testId={`${testId}.create-issue-button`}
               title="Create New Issue"
               backgroundColor="blue"
               type="text"
@@ -147,6 +174,7 @@ const IssuesPage: React.FC = () => {
           <div className="issues-page-search-filter-container">
             <div className="issues-page-search-container">
               <input
+                data-testid={`${testId}.search-input`}
                 type="text"
                 className="issues-page-search-input"
                 placeholder="Search issue..."
@@ -156,6 +184,7 @@ const IssuesPage: React.FC = () => {
               <MagnifyingGlassIcon className="issues-page-search-icon" />
             </div>
             <Button
+              data-testid={`${testId}.filter-button`}
               title="Filter"
               backgroundColor="blue"
               type="text"
@@ -177,7 +206,10 @@ const IssuesPage: React.FC = () => {
               ))}
             </div>
           ) : data?.data.length === 0 ? (
-            <EmptyData title="No Issues found..." />
+            <EmptyData
+              title="No Issues found..."
+              testId={`${testId}.empty-data`}
+            />
           ) : (
             <div className="issues-page-content-data">
               {data?.data.map((issue) => (
@@ -188,7 +220,7 @@ const IssuesPage: React.FC = () => {
                   issueDate={issue.issueDate}
                   imageUri={issue.imageUri}
                   onEdit={() => handleOpenModalEdit(issue._id.toString())}
-                  onRemove={() => handleOpenModalDelete(issue)}
+                  onRemove={() => handleOpenModalDelete(issue._id.toString())}
                 />
               ))}
             </div>
@@ -215,27 +247,29 @@ const IssuesPage: React.FC = () => {
         </div>
       </div>
       <ConfirmationModal
-        {...modalDeleteData}
-        onCancel={handleResetModalDeleteData}
+        isOpen={isModalDeleteOpen}
+        onCancel={handleCloseModalDelete}
         onConfirm={handleConfirmDelete}
         title="Confirm Deletion"
-        description={`Are you sure you want to delete ${modalDeleteData.issue?.title}?`}
+        description={`Are you sure you want to delete this issue?`}
       />
       <FilterModal
-        {...modalFilterData}
-        onClose={() =>
-          setModalFilterData({ ...modalFilterData, isOpen: false })
-        }
+        isOpen={isModalFilterOpen}
+        onClose={handleCloseModalFilter}
         onConfirm={handleApplyFilter}
+        onReset={handleResetFilter}
+        filterSortBy={sortBy}
+        filterOrder={order}
       />
       <CreateModal
-        {...modalCreateData}
-        onClose={handleResetModalCreateData}
+        isOpen={isModalCreateOpen}
+        onClose={handleCloseModalCreate}
         onCreate={handleCreateNewIssue}
       />
       <EditModal
-        {...modalEditData}
-        onClose={handleResetModalEditData}
+        isOpen={isModalEditOpen}
+        issueId={selectedIssueId}
+        onClose={handleCloseModalEdit}
         onEdit={handleSubmitEdit}
       />
     </div>
