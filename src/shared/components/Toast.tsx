@@ -21,7 +21,10 @@ export const Toast: React.FC<Props> = (props) => {
   };
 
   return (
-    <div className={`toast-container ${getBackgroundColor(props.type)}`}>
+    <div
+      className={`toast-container ${getBackgroundColor(props.type)}`}
+      data-testid="toast-global"
+    >
       {props.message}
     </div>
   );
