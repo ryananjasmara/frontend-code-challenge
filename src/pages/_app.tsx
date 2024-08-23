@@ -2,7 +2,6 @@ import { AppProps } from 'next/app';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import React from 'react';
 import '../app/globals.css';
-import IssuesProvider from '@/pages/contexts/Issues.context';
 import ToastProvider from '@/pages/contexts/Toast.context';
 
 const queryClient = new QueryClient({
@@ -10,6 +9,9 @@ const queryClient = new QueryClient({
     queries: {
       retry: 0,
       refetchOnWindowFocus: false
+    },
+    mutations: {
+      retry: 0
     }
   }
 });
@@ -17,11 +19,9 @@ const queryClient = new QueryClient({
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
-      <IssuesProvider>
-        <ToastProvider>
-          <Component {...pageProps} />
-        </ToastProvider>
-      </IssuesProvider>
+      <ToastProvider>
+        <Component {...pageProps} />
+      </ToastProvider>
     </QueryClientProvider>
   );
 }

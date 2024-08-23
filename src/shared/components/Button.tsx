@@ -2,6 +2,7 @@ import React from 'react';
 import './Button.css';
 
 interface TextButtonProps {
+  testId?: string;
   type: 'text';
   title: string;
   backgroundColor: 'blue' | 'red' | 'green' | 'yellow' | 'neutral';
@@ -11,6 +12,7 @@ interface TextButtonProps {
 }
 
 interface IconButtonProps {
+  testId?: string;
   type: 'icon';
   title?: never;
   backgroundColor: 'blue' | 'red' | 'green' | 'yellow' | 'neutral';
@@ -27,12 +29,18 @@ export const Button: React.FC<ButtonProps> = (props) => {
     colorClass += ' disabled';
   }
 
+  let padding = 'button-padding-text';
+  if (props.type === 'icon') {
+    padding = 'button-padding-icon';
+  }
+
   return (
     <div>
       <button
         onClick={props.isDisabled ? undefined : props.onClick}
-        className={`button-container ${colorClass}`}
+        className={`button-container ${colorClass} ${padding}`}
         disabled={props.isDisabled}
+        data-testid={`${props.testId}.button`}
       >
         {props.type === 'icon' && props.icon
           ? React.isValidElement(props.icon)

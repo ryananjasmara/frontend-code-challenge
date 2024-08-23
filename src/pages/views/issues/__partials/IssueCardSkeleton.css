@@ -1,31 +1,59 @@
-.card-skeleton {
+.issue-card-skeleton {
   @apply bg-white rounded-md shadow-md overflow-hidden relative animate-pulse;
 }
 
-.card-skeleton .badge {
+.issue-card-skeleton-badge {
   @apply absolute top-1 left-1 z-10 bg-gray-300 text-base font-semibold px-2 py-0.5 rounded-full w-12 h-6;
 }
 
-.card-skeleton .image-placeholder {
+.issue-card-skeleton-image-placeholder {
   @apply relative w-full h-64 bg-gray-300;
 }
 
-.card-skeleton .content {
+.issue-card-skeleton-content {
   @apply p-4 flex justify-between items-center;
 }
 
-.card-skeleton .text-placeholder {
-  @apply bg-gray-300 w-40 h-4 rounded-md;
+.issue-card-skeleton-text-placeholder {
+  @apply bg-gray-300 w-48 h-4 rounded-md;
 }
 
-.card-skeleton .text-placeholder + .text-placeholder {
+.issue-card-skeleton-text-placeholder + .issue-card-skeleton-text-placeholder {
   @apply mt-2;
 }
 
-.card-skeleton .icon-group {
+.issue-card-skeleton-icon-group {
   @apply flex gap-2;
 }
 
-.card-skeleton .icon-placeholder {
+.issue-card-skeleton-icon-placeholder {
   @apply bg-gray-300 p-2 rounded-md w-10 h-10;
+}
+
+@media (min-width: 768px) {
+  .issue-card-skeleton-image-placeholder {
+    @apply h-64;
+  }
+
+  .issue-card-skeleton-content {
+    @apply flex-row items-center;
+  }
+
+  .issue-card-skeleton-text-placeholder {
+    @apply w-24;
+  }
+}
+
+@media (min-width: 1024px) {
+  .issue-card-skeleton-image-placeholder {
+    @apply h-64;
+  }
+
+  .issue-card-skeleton-content {
+    @apply flex-row items-center;
+  }
+
+  .issue-card-skeleton-text-placeholder {
+    @apply w-32;
+  }
 }

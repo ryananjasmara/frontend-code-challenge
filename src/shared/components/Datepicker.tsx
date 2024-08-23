@@ -2,6 +2,7 @@ import React from 'react';
 import './Datepicker.css';
 
 interface Props {
+  testId?: string;
   value: string;
   onChange: (value: string) => void;
   label: string;
@@ -10,7 +11,12 @@ interface Props {
 export const Datepicker: React.FC<Props> = (props) => {
   return (
     <div className="datepicker-container">
-      <label className="datepicker-label">{props.label}</label>
+      <label
+        className="datepicker-label"
+        data-testid={`${props.testId}.datepicker-label`}
+      >
+        {props.label}
+      </label>
       <input
         type="date"
         className="datepicker-input"
@@ -22,6 +28,7 @@ export const Datepicker: React.FC<Props> = (props) => {
               : ''
           )
         }
+        data-testid={`${props.testId}.datepicker-input`}
       />
     </div>
   );
