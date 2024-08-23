@@ -15,5 +15,5 @@
 }
 
 .create-modal-image {
-  @apply w-12 h-12 rounded-lg mb-4 w-full h-auto;
+  @apply rounded-lg mb-4 w-full h-auto max-h-80;
 }

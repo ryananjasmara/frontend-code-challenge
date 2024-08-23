@@ -27,11 +27,16 @@ export const Button: React.FC<ButtonProps> = (props) => {
     colorClass += ' disabled';
   }
 
+  let padding = 'button-padding-text';
+  if (props.type === 'icon') {
+    padding = 'button-padding-icon';
+  }
+
   return (
     <div>
       <button
         onClick={props.isDisabled ? undefined : props.onClick}
-        className={`button-container ${colorClass}`}
+        className={`button-container ${colorClass} ${padding}`}
         disabled={props.isDisabled}
       >
         {props.type === 'icon' && props.icon

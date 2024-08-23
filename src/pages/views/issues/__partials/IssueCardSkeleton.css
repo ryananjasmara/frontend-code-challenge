@@ -15,7 +15,7 @@
 }
 
 .card-skeleton .text-placeholder {
-  @apply bg-gray-300 w-40 h-4 rounded-md;
+  @apply bg-gray-300 w-48 h-4 rounded-md;
 }
 
 .card-skeleton .text-placeholder + .text-placeholder {
@@ -28,4 +28,32 @@
 
 .card-skeleton .icon-placeholder {
   @apply bg-gray-300 p-2 rounded-md w-10 h-10;
+}
+
+@media (min-width: 768px) {
+  .card-skeleton .image-placeholder {
+    @apply h-64;
+  }
+
+  .card-skeleton .content {
+    @apply flex-row items-center;
+  }
+
+  .card-skeleton .text-placeholder {
+    @apply w-24;
+  }
+}
+
+@media (min-width: 1024px) {
+  .card-skeleton .image-placeholder {
+    @apply h-64;
+  }
+
+  .card-skeleton .content {
+    @apply flex-row items-center;
+  }
+
+  .card-skeleton .text-placeholder {
+    @apply w-32;
+  }
 }
