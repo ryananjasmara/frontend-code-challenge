@@ -4,21 +4,21 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
-    case 'GET':
-      if (req.query.id) {
-        return getDetail(req, res);
-      } else {
-        return getIssues(req, res);
-      }
-    case 'POST':
-      return createIssue(req, res);
-    case 'DELETE':
-      return deleteIssue(req, res);
-    case 'PUT':
-      return updateIssue(req, res);
-    default:
-      res.setHeader('Allow', ['GET', 'POST', 'DELETE', 'PUT']);
-      res.status(405).end(`Method ${req.method} Not Allowed`);
+  case 'GET':
+    if (req.query.id) {
+      return getDetail(req, res);
+    } else {
+      return getIssues(req, res);
+    }
+  case 'POST':
+    return createIssue(req, res);
+  case 'DELETE':
+    return deleteIssue(req, res);
+  case 'PUT':
+    return updateIssue(req, res);
+  default:
+    res.setHeader('Allow', ['GET', 'POST', 'DELETE', 'PUT']);
+    res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
 

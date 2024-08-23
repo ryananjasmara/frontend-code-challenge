@@ -3,17 +3,17 @@ import './IssueCardSkeleton.css';
 
 const IssueCardSkeleton: React.FC = () => {
   return (
-    <div className="card-skeleton">
-      <div className="badge"></div>
-      <div className="image-placeholder"></div>
-      <div className="content">
+    <div className="issue-card-skeleton">
+      <div className="issue-card-skeleton-badge"></div>
+      <div className="issue-card-skeleton-image-placeholder"></div>
+      <div className="issue-card-skeleton-content">
         <div>
-          <div className="text-placeholder"></div>
-          <div className="text-placeholder"></div>
+          <div className="issue-card-skeleton-text-placeholder"></div>
+          <div className="issue-card-skeleton-text-placeholder"></div>
         </div>
-        <div className="icon-group">
-          <div className="icon-placeholder"></div>
-          <div className="icon-placeholder"></div>
+        <div className="issue-card-skeleton-icon-group">
+          <div className="issue-card-skeleton-icon-placeholder"></div>
+          <div className="issue-card-skeleton-icon-placeholder"></div>
         </div>
       </div>
     </div>

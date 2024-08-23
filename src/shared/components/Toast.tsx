@@ -9,19 +9,22 @@ interface Props {
 export const Toast: React.FC<Props> = (props) => {
   const getBackgroundColor = (type: 'success' | 'warning' | 'error' | null) => {
     switch (type) {
-      case 'success':
-        return 'toast-success';
-      case 'warning':
-        return 'toast-warning';
-      case 'error':
-        return 'toast-error';
-      default:
-        return 'toast-default';
+    case 'success':
+      return 'toast-success';
+    case 'warning':
+      return 'toast-warning';
+    case 'error':
+      return 'toast-error';
+    default:
+      return 'toast-default';
     }
   };
 
   return (
-    <div className={`toast-container ${getBackgroundColor(props.type)}`}>
+    <div
+      className={`toast-container ${getBackgroundColor(props.type)}`}
+      data-testid="toast-global"
+    >
       {props.message}
     </div>
   );
