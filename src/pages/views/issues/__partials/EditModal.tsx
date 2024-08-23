@@ -1,73 +1,35 @@
 import { Button, Datepicker, TextField } from '@/shared/components';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment } from 'react';
 import './EditModal.css';
 import { UpdateIssuePayload } from '@/services/types';
-import { useIssuesContext } from '@/pages/contexts/Issues.context';
-import { useGetIssueDetail } from '@/services/queries';
+import { useEditModalUtil } from './EditModal.util';
 
-interface Props {
+export interface Props {
+  testId?: string;
   isOpen: boolean;
+  issueId: string;
   onClose: () => void;
   onEdit: (issue: UpdateIssuePayload) => void;
 }
 
 const EditModal: React.FC<Props> = (props) => {
   const {
-    stateContext: { modalEditData }
-  } = useIssuesContext();
+    title,
+    setTitle,
+    issueNumber,
+    setIssueNumber,
+    issueDate,
+    setIssueDate,
+    imageUri,
+    setImageUri,
+    handleClose,
+    handleEdit,
+    handleGenerateImage,
+    issueDetailData,
+    isLoadingIssueDetail
+  } = useEditModalUtil(props);
 
-  const { data, isLoading } = useGetIssueDetail({
-    params: { id: modalEditData.issueId },
-    enabled: modalEditData.issueId !== ''
-  });
-
-  const [title, setTitle] = useState('');
-  const [issueNumber, setIssueNumber] = useState('');
-  const [issueDate, setIssueDate] = useState('');
-  const [imageUri, setImageUri] = useState('');
-
-  useEffect(() => {
-    if (!isLoading && data?.data) {
-      setTitle(data.data.title);
-      setIssueNumber(data.data.issueNumber.toString());
-      setIssueDate(data.data.issueDate);
-      setImageUri(data.data.imageUri);
-    }
-  }, [data?.data, isLoading]);
-
-  const handleEdit = () => {
-    if (title && issueNumber && issueDate && imageUri) {
-      props.onEdit({
-        id: modalEditData.issueId,
-        title,
-        issueNumber: parseInt(issueNumber),
-        issueDate,
-        imageUri
-      });
-
-      handleClose();
-    }
-  };
-
-  const handleGenerateImage = () => {
-    const background = Math.floor(Math.random() * 16777215)
-      .toString(16)
-      .padStart(6, '0');
-    const foreground = Math.floor(Math.random() * 16777215)
-      .toString(16)
-      .padStart(6, '0');
-    const generatedImageUri = `https://dummyimage.com/300x300/${background}/${foreground}`;
-
-    setImageUri(generatedImageUri);
-  };
-
-  const handleClose = () => {
-    setTitle('');
-    setIssueNumber('');
-    setIssueDate('');
-    setImageUri('');
-    props.onClose();
-  };
+  if (!props.isOpen) return null;
 
   const Skeleton = () => {
     return (
@@ -82,41 +44,44 @@ const EditModal: React.FC<Props> = (props) => {
     );
   };
 
-  if (!props.isOpen) return null;
-
   return (
     <div className="edit-modal-overlay">
       <div className="edit-modal-container">
-        {isLoading ? (
+        {isLoadingIssueDetail ? (
           <Skeleton />
         ) : (
           <Fragment>
-            <h2 className="edit-modal-header">{`Edit ${data?.data.title}`}</h2>
+            <h2 className="edit-modal-header">{`Edit ${issueDetailData?.data.title}`}</h2>
             <TextField
+              testId={`${props.testId}.title-textfield`}
               type="text"
               label="Title"
               value={title}
               onChange={setTitle}
             />
             <TextField
+              testId={`${props.testId}.issue-number-textfield`}
               type="number"
               label="Issue Number"
               value={issueNumber}
               onChange={setIssueNumber}
             />
             <Datepicker
+              testId={`${props.testId}.issue-date-datepicker`}
               label="Issue Date"
               value={issueDate}
               onChange={setIssueDate}
             />
             {imageUri && (
               <img
+                data-testid={`${props.testId}.image-preview`}
                 src={imageUri}
                 alt="Issue Image"
                 className="edit-modal-image"
               />
             )}
             <TextField
+              testId={`${props.testId}.image-uri-textfield`}
               type="text"
               label="Image URI"
               value={imageUri}
@@ -126,18 +91,21 @@ const EditModal: React.FC<Props> = (props) => {
         )}
         <div className="edit-modal-button-container">
           <Button
+            testId={`${props.testId}.generate-image-button`}
             type="text"
             title="Generate Image"
             onClick={handleGenerateImage}
             backgroundColor="yellow"
           />
           <Button
+            testId={`${props.testId}.close-button`}
             type="text"
             title="Close"
             onClick={handleClose}
             backgroundColor="neutral"
           />
           <Button
+            testId={`${props.testId}.edit-button`}
             type="text"
             title="Edit"
             onClick={handleEdit}
