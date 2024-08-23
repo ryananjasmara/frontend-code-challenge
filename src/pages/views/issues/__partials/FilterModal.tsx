@@ -1,6 +1,6 @@
 import { Dropdown, Button } from '@/shared/components';
 import './FilterModal.css';
-import { useFilterModalUtil } from './FilterModal.util';
+import useFilterModalUtil from './FilterModal.util';
 
 export interface IFilterData {
   sortBy: string;

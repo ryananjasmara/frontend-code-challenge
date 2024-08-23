@@ -9,7 +9,7 @@ import {
 import { CreateIssuePayload, UpdateIssuePayload } from '@/services/types';
 import { IFilterData } from './__partials/FilterModal';
 
-export const useIssuePageUtil = () => {
+const useIssuePageUtil = () => {
   // keyword
   const [keyword, setKeyword] = useState('');
   const debounceKeyword = useDebounce(keyword, 1000);
@@ -187,3 +187,5 @@ export const useIssuePageUtil = () => {
     handleConfirmDelete
   };
 };
+
+export default useIssuePageUtil;

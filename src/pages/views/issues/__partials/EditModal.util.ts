@@ -3,7 +3,7 @@ import { Props } from './EditModal';
 import { useGetIssueDetail } from '@/services/queries';
 import { generateRandomImage } from '@/shared/utils';
 
-export const useEditModalUtil = (props: Props) => {
+const useEditModalUtil = (props: Props) => {
   const [title, setTitle] = useState('');
   const [issueNumber, setIssueNumber] = useState('');
   const [issueDate, setIssueDate] = useState('');
@@ -67,3 +67,5 @@ export const useEditModalUtil = (props: Props) => {
     isLoadingIssueDetail
   };
 };
+
+export default useEditModalUtil;
