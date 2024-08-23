@@ -20,6 +20,7 @@ import FilterModal, { IFilterData } from './__partials/FilterModal';
 import CreateModal from './__partials/CreateModal';
 import { CreateIssuePayload, UpdateIssuePayload } from '@/services/types';
 import EditModal from './__partials/EditModal';
+import './Issues.css';
 
 const IssuesPage: React.FC = () => {
   const [keyword, setKeyword] = useState('');
@@ -131,11 +132,11 @@ const IssuesPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <div className="container mx-auto p-4 flex-grow flex flex-col">
-        <div className="mb-4">
-          <h1 className="text-2xl font-bold mb-2">Past Issues</h1>
-          <div className="mb-2">
+    <div className="issues-page-container">
+      <div className="issues-page-inner-container">
+        <div className="issues-page-header">
+          <h1 className="issues-page-title">Past Issues</h1>
+          <div className="issues-page-button-container">
             <Button
               title="Create New Issue"
               backgroundColor="blue"
@@ -143,20 +144,16 @@ const IssuesPage: React.FC = () => {
               onClick={handleOpenModalCreate}
             />
           </div>
-          <div className="flex justify-between space-x-3">
-            <div className="relative">
+          <div className="issues-page-search-filter-container">
+            <div className="issues-page-search-container">
               <input
                 type="text"
-                className="pl-10 pr-4 py-2 border rounded-lg focus:outline-none
-                  focus:ring-2 focus:ring-blue-500"
+                className="issues-page-search-input"
                 placeholder="Search issue..."
                 value={keyword}
                 onChange={(newVal) => setKeyword(newVal.target.value)}
               />
-              <MagnifyingGlassIcon
-                className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 
-                  text-gray-400"
-              />
+              <MagnifyingGlassIcon className="issues-page-search-icon" />
             </div>
             <Button
               title="Filter"
@@ -167,14 +164,14 @@ const IssuesPage: React.FC = () => {
           </div>
         </div>
         <div
-          className={`flex-grow flex justify-center ${
+          className={`issues-page-content-container ${
             isLoading || (data && data.data && data.data.length > 0)
               ? 'items-start'
               : 'items-center'
           }`}
         >
           {isLoading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 w-full">
+            <div className="issues-page-content-loading">
               {Array.from({ length: 10 }).map((_, index) => (
                 <IssueCardSkeleton key={index} />
               ))}
@@ -182,7 +179,7 @@ const IssuesPage: React.FC = () => {
           ) : data?.data.length === 0 ? (
             <EmptyData title="No Issues found..." />
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 w-full">
+            <div className="issues-page-content-data">
               {data?.data.map((issue) => (
                 <IssueCard
                   key={issue._id.toString()}
@@ -197,8 +194,8 @@ const IssuesPage: React.FC = () => {
             </div>
           )}
         </div>
-        <div className="flex flex-col">
-          <div className="flex justify-center items-center mt-5 p-3 space-x-4">
+        <div className="issues-page-pagination-container">
+          <div className="issues-page-pagination-controls">
             <Button
               icon={<ArrowLeftIcon className="h-5 w-5" />}
               backgroundColor="blue"
