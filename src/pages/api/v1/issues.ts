@@ -5,7 +5,11 @@ import { NextApiRequest, NextApiResponse } from 'next';
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   switch (req.method) {
     case 'GET':
-      return getIssues(req, res);
+      if (req.query.id) {
+        return getDetail(req, res);
+      } else {
+        return getIssues(req, res);
+      }
     case 'POST':
       return createIssue(req, res);
     case 'DELETE':
@@ -20,31 +24,55 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
 async function getIssues(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const { page = '1', limit = '10', keyword = '' } = req.query;
+    const { page = '1', limit = '10', keyword = '', sortBy, order } = req.query;
     const pageNumber = parseInt(page as string, 10);
     const limitNumber = parseInt(limit as string, 10);
     const skip = (pageNumber - 1) * limitNumber;
 
+    const validSortBy = ['issueNumber', 'title', 'date'];
+    const validOrder = ['ascending', 'descending'];
+
+    if (sortBy && !validSortBy.includes(sortBy as string)) {
+      return res.status(400).json({ message: 'Invalid sortBy parameter' });
+    }
+
+    if (order && !validOrder.includes(order as string)) {
+      return res.status(400).json({ message: 'Invalid order parameter' });
+    }
+
+    let sortField = 'issueDate';
+    if (sortBy) {
+      if (sortBy === 'issueNumber') {
+        sortField = 'issueNumber';
+      } else {
+        sortField = sortBy as string;
+      }
+    }
+
+    const sortOrder = order === 'descending' ? -1 : 1;
+
     const collection = await IssueCollection();
 
-    const filter: any = {};
+    const filter: Record<string, unknown> = {};
     if (keyword) {
       filter.title = { $regex: keyword, $options: 'i' };
     }
 
-    const issues = await collection.find(filter)
+    const issues = await collection
+      .find(filter)
+      .sort({ [sortField]: sortOrder })
       .skip(skip)
       .limit(limitNumber)
       .toArray();
     const totalIssues = await collection.countDocuments(filter);
 
-    res.status(200).json({ 
+    res.status(200).json({
       data: issues,
       meta: {
         page: pageNumber,
         limit: limitNumber,
         total: totalIssues,
-        totalPage: Math.ceil(totalIssues / limitNumber), 
+        totalPage: Math.ceil(totalIssues / limitNumber)
       }
     });
   } catch (error) {
@@ -53,11 +81,38 @@ async function getIssues(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
+async function getDetail(req: NextApiRequest, res: NextApiResponse) {
+  try {
+    const { id } = req.query;
+    if (!ObjectId.isValid(id as string)) {
+      return res.status(400).json({ message: 'Invalid issue ID' });
+    }
+
+    const collection = await IssueCollection();
+    const issue = await collection.findOne({ _id: new ObjectId(id as string) });
+
+    if (!issue) {
+      return res.status(404).json({ message: 'Issue not found' });
+    }
+
+    res.status(200).json({ data: issue });
+  } catch (error) {
+    console.error('Error fetching issue detail:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
 async function createIssue(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { imageUri, title, issueNumber, issueDate } = req.body;
     const collection = await IssueCollection();
-    const newIssue = { _id: new ObjectId(), imageUri, title, issueNumber, issueDate };
+    const newIssue = {
+      _id: new ObjectId(),
+      imageUri,
+      title,
+      issueNumber,
+      issueDate
+    };
     const result = await collection.insertOne(newIssue);
     res.status(201).json({ message: 'Issue created successfully', result });
   } catch (error) {
@@ -70,7 +125,9 @@ async function deleteIssue(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { id } = req.query;
     const collection = await IssueCollection();
-    const result = await collection.deleteOne({ _id: new ObjectId(id as string) });
+    const result = await collection.deleteOne({
+      _id: new ObjectId(id as string)
+    });
     if (result.deletedCount === 1) {
       res.status(200).json({ message: 'Issue deleted successfully' });
     } else {

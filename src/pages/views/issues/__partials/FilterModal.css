@@ -1,0 +1,43 @@
+.filter-modal-container {
+  @apply fixed inset-0 z-10 overflow-y-auto;
+}
+
+.filter-modal-content {
+  @apply flex items-center justify-center min-h-screen px-4 text-center sm:block sm:p-0 relative;
+}
+
+.filter-modal-overlay {
+  @apply fixed inset-0 transition-opacity;
+}
+
+.filter-modal-overlay-bg {
+  @apply absolute inset-0 bg-gray-500 opacity-75;
+}
+
+.filter-modal-hidden-span {
+  @apply hidden sm:inline-block sm:align-middle sm:h-screen;
+}
+
+.filter-modal-dialog {
+  @apply inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full w-full max-w-md;
+}
+
+.filter-modal-body {
+  @apply bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4;
+}
+
+.filter-modal-header {
+  @apply sm:flex sm:items-start;
+}
+
+.filter-modal-title {
+  @apply mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full text-lg leading-6 font-medium text-gray-900;
+}
+
+.filter-modal-footer {
+  @apply bg-gray-50 px-4 py-3 sm:px-6 flex justify-between flex-row-reverse;
+}
+
+.filter-modal-footer-buttons {
+  @apply flex flex-row space-x-4;
+}
