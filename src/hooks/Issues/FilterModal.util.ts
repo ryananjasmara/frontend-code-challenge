@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Props } from './FilterModal';
+import { Props } from '@/pages/views/issues/__partials/FilterModal';
 
-const useFilterModalUtil = (props: Props) => {
+export const useFilterModalUtil = (props: Props) => {
   const [sortBy, setSortBy] = useState('');
   const [order, setOrder] = useState('');
 
@@ -25,5 +25,3 @@ const useFilterModalUtil = (props: Props) => {
     handleResetFilter
   };
 };
-
-export default useFilterModalUtil;

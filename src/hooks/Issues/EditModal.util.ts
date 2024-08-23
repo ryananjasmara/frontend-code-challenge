@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Props } from './EditModal';
+import { Props } from '@/pages/views/issues/__partials/EditModal';
 import { useGetIssueDetail } from '@/services/queries';
 import { generateRandomImage } from '@/shared/utils';
 
-const useEditModalUtil = (props: Props) => {
+export const useEditModalUtil = (props: Props) => {
   const [title, setTitle] = useState('');
   const [issueNumber, setIssueNumber] = useState('');
   const [issueDate, setIssueDate] = useState('');
@@ -67,5 +67,3 @@ const useEditModalUtil = (props: Props) => {
     isLoadingIssueDetail
   };
 };
-
-export default useEditModalUtil;

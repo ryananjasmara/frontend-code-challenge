@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Props } from './CreateModal';
+import { Props } from '@/pages/views/issues/__partials/CreateModal';
 import { generateRandomImage } from '@/shared/utils';
 
-const useCreateModalUtil = (props: Props) => {
+export const useCreateModalUtil = (props: Props) => {
   const [title, setTitle] = useState('');
   const [issueNumber, setIssueNumber] = useState('');
   const [issueDate, setIssueDate] = useState('');
@@ -48,5 +48,3 @@ const useCreateModalUtil = (props: Props) => {
     handleGenerateImage
   };
 };
-
-export default useCreateModalUtil;

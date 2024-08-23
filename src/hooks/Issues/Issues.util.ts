@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { generateRandomImage, useDebounce } from '@/shared/utils';
+import { useDebounce } from '@/shared/utils';
 import {
   useCreateIssue,
   useDeleteIssue,
@@ -7,9 +7,9 @@ import {
   useUpdateIssue
 } from '@/services/queries';
 import { CreateIssuePayload, UpdateIssuePayload } from '@/services/types';
-import { IFilterData } from './__partials/FilterModal';
+import { IFilterData } from '@/pages/views/issues/__partials/FilterModal';
 
-const useIssuePageUtil = () => {
+export const useIssuePageUtil = () => {
   // keyword
   const [keyword, setKeyword] = useState('');
   const debounceKeyword = useDebounce(keyword, 1000);
@@ -187,5 +187,3 @@ const useIssuePageUtil = () => {
     handleConfirmDelete
   };
 };
-
-export default useIssuePageUtil;
