@@ -1,4 +1,3 @@
-import { useState, useEffect, use } from 'react';
 import { Dropdown, Button } from '@/shared/components';
 import './FilterModal.css';
 import { useFilterModalUtil } from './FilterModal.util';

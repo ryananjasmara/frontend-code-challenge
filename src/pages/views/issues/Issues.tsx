@@ -1,156 +1,50 @@
-import { useState, useEffect } from 'react';
-import {
-  useCreateIssue,
-  useDeleteIssue,
-  useGetIssues,
-  useUpdateIssue
-} from '@/services/queries';
 import { Button, ConfirmationModal, EmptyData } from '@/shared/components';
 import {
   MagnifyingGlassIcon,
   ArrowLeftIcon,
   ArrowRightIcon
 } from '@heroicons/react/24/solid';
-import { useDebounce } from '@/shared/utils';
 import IssueCard from './__partials/IssueCard';
 import IssueCardSkeleton from './__partials/IssueCardSkeleton';
-import FilterModal, { IFilterData } from './__partials/FilterModal';
+import FilterModal from './__partials/FilterModal';
 import CreateModal from './__partials/CreateModal';
-import { CreateIssuePayload, UpdateIssuePayload } from '@/services/types';
 import EditModal from './__partials/EditModal';
 import './Issues.css';
+import { useIssuePageUtil } from './Issues.util';
 
 const testId = 'issues-page';
 
 const IssuesPage: React.FC = () => {
-  // keyword
-  const [keyword, setKeyword] = useState('');
-  const debounceKeyword = useDebounce(keyword, 1000);
-  // pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  // modal create
-  const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
-  // modal delete
-  const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
-  // modal edit
-  const [isModalEditOpen, setIsModalEditOpen] = useState(false);
-  // modal filter
-  const [isModalFilterOpen, setIsModalFilterOpen] = useState(false);
-  const [sortBy, setSortBy] = useState('');
-  const [order, setOrder] = useState('');
-  // shared
-  const [selectedIssueId, setSelectedIssueId] = useState('');
-
-  const { data, isLoading } = useGetIssues({
-    enabled: true,
-    staleTime: 60,
-    params: {
-      page: currentPage,
-      limit: 10,
-      keyword: debounceKeyword,
-      sortBy: sortBy,
-      order: order
-    }
-  });
-
-  const deleteIssueMutation = useDeleteIssue();
-  const createIssueMutation = useCreateIssue();
-  const updateIssueMutation = useUpdateIssue();
-
-  useEffect(() => {
-    if (data) {
-      setTotalPages(data.meta.totalPage);
-    }
-  }, [data]);
-
-  const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const handleOpenModalFilter = () => {
-    setIsModalFilterOpen(true);
-  };
-
-  const handleCloseModalFilter = () => {
-    setIsModalFilterOpen(false);
-  };
-
-  const handleApplyFilter = (filters: IFilterData) => {
-    setSortBy(filters.sortBy);
-    setOrder(filters.order);
-    handleCloseModalFilter();
-  };
-
-  const handleResetFilter = () => {
-    setSortBy('');
-    setOrder('');
-  };
-
-  const handleOpenModalCreate = () => {
-    setIsModalCreateOpen(true);
-  };
-
-  const handleCloseModalCreate = () => {
-    setIsModalCreateOpen(false);
-  };
-
-  const handleCreateNewIssue = (payload: CreateIssuePayload) => {
-    createIssueMutation.mutate(payload);
-    handleCloseModalCreate();
-  };
-
-  const handleOpenModalEdit = (issueId: string) => {
-    setIsModalEditOpen(true);
-    setSelectedIssueId(issueId);
-  };
-
-  const handleCloseModalEdit = () => {
-    setIsModalEditOpen(false);
-    setSelectedIssueId('');
-  };
-
-  const handleSubmitEdit = (payload: UpdateIssuePayload) => {
-    updateIssueMutation.mutate(payload);
-  };
-
-  const handleOpenModalDelete = (issueId: string) => {
-    setIsModalDeleteOpen(true);
-    setSelectedIssueId(issueId);
-  };
-
-  const handleCloseModalDelete = () => {
-    setIsModalDeleteOpen(false);
-    setSelectedIssueId('');
-  };
-
-  const handleConfirmDelete = () => {
-    deleteIssueMutation.mutate({ id: selectedIssueId });
-  };
-
-  useEffect(() => {
-    if (deleteIssueMutation.isSuccess) {
-      setCurrentPage(1);
-      deleteIssueMutation.reset();
-      handleCloseModalDelete();
-    }
-  }, [deleteIssueMutation.isSuccess]);
-
-  useEffect(() => {
-    if (updateIssueMutation.isSuccess) {
-      setCurrentPage(1);
-      updateIssueMutation.reset();
-      handleCloseModalEdit();
-    }
-  }, [updateIssueMutation.isSuccess]);
+  const {
+    keyword,
+    setKeyword,
+    currentPage,
+    totalPages,
+    isModalCreateOpen,
+    isModalDeleteOpen,
+    isModalEditOpen,
+    isModalFilterOpen,
+    sortBy,
+    order,
+    selectedIssueId,
+    issueListData,
+    isLoadingIssueList,
+    handlePreviousPage,
+    handleNextPage,
+    handleOpenModalFilter,
+    handleCloseModalFilter,
+    handleApplyFilter,
+    handleResetFilter,
+    handleOpenModalCreate,
+    handleCloseModalCreate,
+    handleCreateNewIssue,
+    handleOpenModalEdit,
+    handleCloseModalEdit,
+    handleSubmitEdit,
+    handleOpenModalDelete,
+    handleCloseModalDelete,
+    handleConfirmDelete
+  } = useIssuePageUtil();
 
   return (
     <div className="issues-page-container">
@@ -194,25 +88,28 @@ const IssuesPage: React.FC = () => {
         </div>
         <div
           className={`issues-page-content-container ${
-            isLoading || (data && data.data && data.data.length > 0)
+            isLoadingIssueList ||
+            (issueListData &&
+              issueListData.data &&
+              issueListData.data.length > 0)
               ? 'items-start'
               : 'items-center'
           }`}
         >
-          {isLoading ? (
+          {isLoadingIssueList ? (
             <div className="issues-page-content-loading">
               {Array.from({ length: 10 }).map((_, index) => (
                 <IssueCardSkeleton key={index} />
               ))}
             </div>
-          ) : data?.data.length === 0 ? (
+          ) : issueListData?.data.length === 0 ? (
             <EmptyData
               title="No Issues found..."
               testId={`${testId}.empty-data`}
             />
           ) : (
             <div className="issues-page-content-data">
-              {data?.data.map((issue) => (
+              {issueListData?.data.map((issue) => (
                 <IssueCard
                   key={issue._id.toString()}
                   issueNumber={issue.issueNumber}
