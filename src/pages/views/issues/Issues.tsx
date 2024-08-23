@@ -20,15 +20,12 @@ import FilterModal, { IFilterData } from './__partials/FilterModal';
 import CreateModal from './__partials/CreateModal';
 import { CreateIssuePayload, UpdateIssuePayload } from '@/services/types';
 import EditModal from './__partials/EditModal';
-import { useToast } from '@/pages/contexts/Toast.context';
 
 const IssuesPage: React.FC = () => {
   const [keyword, setKeyword] = useState('');
   const debounceKeyword = useDebounce(keyword, 1000);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-
-  const { showToast } = useToast();
 
   const {
     stateContext: {

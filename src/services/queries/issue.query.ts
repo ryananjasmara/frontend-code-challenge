@@ -19,12 +19,12 @@ import {
 } from '@/services/types';
 import { ISSUE_QUERY_KEY } from '../constant';
 import { PaginatedResponse, NonPaginatedResponse } from '@/shared/types';
-import { useToast } from '@/pages/contexts/Toast.context';
+import { useToastContext } from '@/pages/contexts/Toast.context';
 
 export const useGetIssues = (
   opts: GetIssueRequest
 ): UseQueryResult<PaginatedResponse<IIssue>> => {
-  const { showToast } = useToast();
+  const { showToast } = useToastContext();
 
   return useQuery(
     [ISSUE_QUERY_KEY.getIssues, opts.params],
@@ -52,7 +52,7 @@ export const useGetIssues = (
 export const useGetIssueDetail = (
   opts: GetIssueDetailRequest
 ): UseQueryResult<NonPaginatedResponse<IIssue>> => {
-  const { showToast } = useToast();
+  const { showToast } = useToastContext();
 
   return useQuery(
     [ISSUE_QUERY_KEY.getIssueDetail, opts.params],
@@ -82,7 +82,7 @@ export const useDeleteIssue = (): UseMutationResult<
   unknown
 > => {
   const queryClient = useQueryClient();
-  const { showToast } = useToast();
+  const { showToast } = useToastContext();
 
   const mutation = useMutation<
     DeleteIssueResponse,
@@ -123,7 +123,7 @@ export const useCreateIssue = (): UseMutationResult<
   unknown
 > => {
   const queryClient = useQueryClient();
-  const { showToast } = useToast();
+  const { showToast } = useToastContext();
 
   const mutation = useMutation<
     CreateIssueResponse,
@@ -164,7 +164,7 @@ export const useUpdateIssue = (): UseMutationResult<
   unknown
 > => {
   const queryClient = useQueryClient();
-  const { showToast } = useToast();
+  const { showToast } = useToastContext();
 
   const mutation = useMutation<
     UpdateIssueResponse,

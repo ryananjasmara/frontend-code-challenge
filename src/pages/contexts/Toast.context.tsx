@@ -14,7 +14,7 @@ interface ToastContextProps {
 
 const ToastContext = createContext<ToastContextProps | undefined>(undefined);
 
-export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({
+const ToastProvider: React.FC<{ children: React.ReactNode }> = ({
   children
 }) => {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -46,10 +46,14 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({
   );
 };
 
-export const useToast = (): ToastContextProps => {
+const useToastContext = (): ToastContextProps => {
   const context = useContext(ToastContext);
   if (!context) {
     throw new Error('useToast must be used within a ToastProvider');
   }
   return context;
 };
+
+export { useToastContext };
+
+export default ToastProvider;
