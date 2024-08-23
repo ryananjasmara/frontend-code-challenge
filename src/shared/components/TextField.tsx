@@ -2,6 +2,7 @@ import React from 'react';
 import './TextField.css';
 
 interface Props {
+  testId?: string;
   value: string;
   onChange: (value: string) => void;
   label: string;
@@ -22,12 +23,18 @@ export const TextField: React.FC<Props> = (props) => {
 
   return (
     <div className="textfield-container">
-      <label className="textfield-label">{props.label}</label>
+      <label
+        className="textfield-label"
+        data-testid={`${props.testId}.textfield-label`}
+      >
+        {props.label}
+      </label>
       <input
         type="text"
         className="textfield-input"
         value={props.value}
         onChange={handleChanges}
+        data-testid={`${props.testId}.textfield-input`}
       />
     </div>
   );
