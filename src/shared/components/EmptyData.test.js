@@ -4,11 +4,13 @@ import { describe, it, expect } from '@jest/globals';
 import { EmptyData } from './EmptyData';
 
 describe('EmptyData Component', () => {
-  it('renders the component with title', () => {
-    const title = 'No Issues Found...';
-    render(<EmptyData title={title} />);
+  const setup = (title = '', testId = 'test') => {
+    render(<EmptyData title={title} testId={testId} />);
+  };
 
-    const textElement = screen.getByText(title);
-    expect(textElement).toBeInTheDocument();
+  it('renders the component with title', () => {
+    setup('No Data Available');
+
+    expect(screen.getByTestId('test.empty-data-text')).toHaveTextContent('No Data Available');
   });
 });

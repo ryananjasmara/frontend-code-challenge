@@ -10,7 +10,7 @@ export const EmptyData: React.FC<Props> = (props) => (
   <div className="empty-data-container">
     <p
       className="empty-data-text"
-      data-testid={`empty-data-text.${props.testId}`}
+      data-testid={`${props.testId}.empty-data-text`}
     >
       {props.title}
     </p>
