@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import FilterModal from './FilterModal';
+import FilterModal from '@/pages/views/issues/__partials/FilterModal';
 
 describe('FilterModal Component', () => {
   let mockOnClose = jest.fn();

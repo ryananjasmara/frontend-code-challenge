@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import CreateModal from './CreateModal';
+import CreateModal from '@/pages/views/issues/__partials/CreateModal';
 import { generateRandomImage } from '@/shared/utils';
 
 jest.mock('@/shared/utils', () => ({

@@ -1,6 +1,6 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import IssueCardSkeleton from './IssueCardSkeleton';
+import { render } from '@testing-library/react';
+import IssueCardSkeleton from '@/pages/views/issues/__partials/IssueCardSkeleton';
 
 describe('IssueCardSkeleton Component', () => {
   const setup = () => {

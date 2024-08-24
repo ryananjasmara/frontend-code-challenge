@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import EditModal from './EditModal';
+import EditModal from '@/pages/views/issues/__partials/EditModal';
 import { useGetIssueDetail } from '@/services/queries';
 import { generateRandomImage } from '@/shared/utils';
 
