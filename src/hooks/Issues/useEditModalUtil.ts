@@ -24,17 +24,15 @@ export const useEditModalUtil = (props: Props) => {
   };
 
   const handleEdit = () => {
-    if (title && issueNumber && issueDate && imageUri) {
-      props.onEdit({
-        id: props.issueId,
-        title,
-        issueNumber: parseInt(issueNumber),
-        issueDate,
-        imageUri
-      });
+    props.onEdit({
+      id: props.issueId,
+      title,
+      issueNumber: parseInt(issueNumber),
+      issueDate,
+      imageUri
+    });
 
-      handleClose();
-    }
+    handleClose();
   };
 
   const handleGenerateImage = () => {
