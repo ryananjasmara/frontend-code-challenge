@@ -1,5 +1,5 @@
 import { formatQueryString } from '@/shared/utils';
-import { HttpServices } from '@/shared/utils/HttpServices';
+import { HttpServices } from '@/shared/utils/httpServices';
 import {
   CreateIssuePayload,
   DeleteIssueParams,
