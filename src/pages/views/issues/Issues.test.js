@@ -1,3 +1,4 @@
+import jest from 'jest';
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import IssuesPage from './Issues';
