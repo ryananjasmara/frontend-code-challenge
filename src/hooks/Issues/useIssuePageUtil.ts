@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useDebounce } from '@/shared/utils';
+import { useDebounce } from '../useDebounce';
 import {
   useCreateIssue,
   useDeleteIssue,
