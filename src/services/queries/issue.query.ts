@@ -19,7 +19,7 @@ import {
 } from '@/services/types';
 import { ISSUE_QUERY_KEY } from '../constant';
 import { PaginatedResponse, NonPaginatedResponse } from '@/shared/types';
-import { useToastContext } from '@/pages/contexts/Toast.context';
+import { useToastContext } from '@/contexts/Toast.context';
 
 export const useGetIssues = (
   opts: GetIssueRequest
