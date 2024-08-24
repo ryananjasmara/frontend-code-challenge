@@ -73,6 +73,25 @@ describe('EditModal Component', () => {
     expect(screen.getByTestId('test.edit-button.button')).toBeInTheDocument();
   });
 
+  it('should render the modal with skeleton loaders when loading', () => {
+    useGetIssueDetail.mockReturnValue({
+      data: null,
+      isLoading: true
+    });
+
+    setup();
+
+    expect(
+      document.querySelector('.edit-modal-skeleton-header')
+    ).toBeInTheDocument();
+    expect(
+      document.querySelector('.edit-modal-skeleton-textfield')
+    ).toBeInTheDocument();
+    expect(
+      document.querySelector('.edit-modal-skeleton-image')
+    ).toBeInTheDocument();
+  });
+
   it('should not render the modal when closed', () => {
     setup({ isOpen: false });
     expect(
