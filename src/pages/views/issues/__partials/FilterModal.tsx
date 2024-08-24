@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dropdown, Button } from '@/shared/components';
 import './FilterModal.css';
-import { useFilterModalUtil } from '@/hooks/Issues/FilterModal.util';
+import { useFilterModalUtil } from '@/hooks/Issues';
 
 export interface IFilterData {
   sortBy: string;

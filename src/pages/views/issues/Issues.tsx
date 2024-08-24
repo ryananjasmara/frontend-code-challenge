@@ -11,7 +11,7 @@ import FilterModal from './__partials/FilterModal';
 import CreateModal from './__partials/CreateModal';
 import EditModal from './__partials/EditModal';
 import './Issues.css';
-import { useIssuePageUtil } from '@/hooks/Issues/Issues.util';
+import { useIssuePageUtil } from '@/hooks/Issues';
 
 const testId = 'issues-page';
 
