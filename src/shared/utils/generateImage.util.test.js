@@ -1,4 +1,4 @@
-import { generateRandomImage } from './GenerateRandomImage.util';
+import { generateRandomImage } from './generateImage.util';
 
 describe('generateRandomImage', () => {
   it('should return a valid image URI', () => {
