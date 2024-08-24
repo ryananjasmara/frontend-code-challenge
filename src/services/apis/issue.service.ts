@@ -15,14 +15,12 @@ export class IssueService extends HttpServices {
   }
 
   static getIssueDetail(params: GetIssueDetailParams, signal?: AbortSignal) {
-    const queryString = formatQueryString(params);
-    const path = `/api/v1/issues?${queryString}`;
+    const path = `/api/v1/issues/${params.id}`;
     return this.get(path, { signal });
   }
 
   static deleteIssue(params: DeleteIssueParams, signal?: AbortSignal) {
-    const queryString = formatQueryString(params);
-    const path = `/api/v1/issues?${queryString}`;
+    const path = `/api/v1/issues/${params.id}`;
     return this.delete(path, { signal });
   }
 
@@ -32,8 +30,8 @@ export class IssueService extends HttpServices {
 
   static updateIssue(data: UpdateIssuePayload, signal?: AbortSignal) {
     const { id, ...requestBody } = data;
-    const queryString = formatQueryString({ id });
-    return this.put(`/api/v1/issues?${queryString}`, {
+    const path = `/api/v1/issues/${id}`;
+    return this.put(path, {
       ...requestBody,
       signal
     });
