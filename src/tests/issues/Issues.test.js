@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import IssuesPage from './Issues';
+import IssuesPage from '@/pages/views/issues/Issues';
 import ToastProvider from '@/contexts/Toast.context';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import {

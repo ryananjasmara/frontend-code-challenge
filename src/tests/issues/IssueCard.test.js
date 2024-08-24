@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import IssueCard from './IssueCard';
+import IssueCard from '@/pages/views/issues/__partials/IssueCard';
 import { simpleDateFormat } from '@/shared/utils';
 
 describe('IssueCard Component', () => {
