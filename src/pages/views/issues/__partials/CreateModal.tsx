@@ -2,7 +2,7 @@ import { Button, Datepicker, TextField } from '@/shared/components';
 import React from 'react';
 import './CreateModal.css';
 import { CreateIssuePayload } from '@/services/types';
-import { useCreateModalUtil } from '@/hooks/Issues/CreateModal.util';
+import { useCreateModalUtil } from '@/hooks/Issues';
 
 export interface Props {
   testId?: string;

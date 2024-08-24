@@ -32,7 +32,7 @@ export const useGetIssues = (
       IssueService.getIssues(opts.params, signal)
         .then((res) => res?.data)
         .catch((error: any) => {
-          if (error?.code !== 'ERR_CANCELED') {
+          if (error?.message !== 'canceled') {
             showToast({
               message: 'Something went wrong',
               duration: 3000,
@@ -60,7 +60,7 @@ export const useGetIssueDetail = (
       IssueService.getIssueDetail(opts.params, signal)
         .then((res) => res?.data)
         .catch((error: any) => {
-          if (error?.code !== 'ERR_CANCELED') {
+          if (error?.message !== 'canceled') {
             showToast({
               message: 'Something went wrong',
               duration: 3000,

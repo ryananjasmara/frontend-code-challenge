@@ -17,16 +17,14 @@ export const useCreateModalUtil = (props: Props) => {
   };
 
   const handleCreate = () => {
-    if (title && issueNumber && issueDate && imageUri) {
-      props.onCreate({
-        title,
-        issueNumber: parseInt(issueNumber),
-        issueDate,
-        imageUri
-      });
+    props.onCreate({
+      title,
+      issueNumber: parseInt(issueNumber),
+      issueDate,
+      imageUri
+    });
 
-      handleClose();
-    }
+    handleClose();
   };
 
   const handleGenerateImage = () => {
