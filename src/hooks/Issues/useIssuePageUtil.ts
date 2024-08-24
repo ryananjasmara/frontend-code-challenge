@@ -45,15 +45,11 @@ export const useIssuePageUtil = () => {
   const updateIssueMutation = useUpdateIssue();
 
   const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
+    setCurrentPage(currentPage - 1);
   };
 
   const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
+    setCurrentPage(currentPage + 1);
   };
 
   const handleOpenModalFilter = () => {
@@ -68,11 +64,6 @@ export const useIssuePageUtil = () => {
     setSortBy(filters.sortBy);
     setOrder(filters.order);
     handleCloseModalFilter();
-  };
-
-  const handleResetFilter = () => {
-    setSortBy('');
-    setOrder('');
   };
 
   const handleOpenModalCreate = () => {
@@ -175,7 +166,6 @@ export const useIssuePageUtil = () => {
     handleOpenModalFilter,
     handleCloseModalFilter,
     handleApplyFilter,
-    handleResetFilter,
     handleOpenModalCreate,
     handleCloseModalCreate,
     handleCreateNewIssue,
