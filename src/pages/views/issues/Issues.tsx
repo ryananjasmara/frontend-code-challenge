@@ -11,7 +11,7 @@ import FilterModal from './__partials/FilterModal';
 import CreateModal from './__partials/CreateModal';
 import EditModal from './__partials/EditModal';
 import './Issues.css';
-import { useIssuePageUtil } from '@/hooks/Issues/Issues.util';
+import { useIssuePageUtil } from '@/hooks/Issues';
 
 const testId = 'issues-page';
 
@@ -35,7 +35,6 @@ const IssuesPage: React.FC = () => {
     handleOpenModalFilter,
     handleCloseModalFilter,
     handleApplyFilter,
-    handleResetFilter,
     handleOpenModalCreate,
     handleCloseModalCreate,
     handleCreateNewIssue,
@@ -79,7 +78,7 @@ const IssuesPage: React.FC = () => {
               <MagnifyingGlassIcon className="issues-page-search-icon" />
             </div>
             <Button
-              data-testid={`${testId}.filter-button`}
+              testId={`${testId}.filter-button`}
               title="Filter"
               backgroundColor="blue"
               type="text"
@@ -110,8 +109,9 @@ const IssuesPage: React.FC = () => {
             />
           ) : (
             <div className="issues-page-content-data">
-              {issueListData?.data.map((issue) => (
+              {issueListData?.data.map((issue, index) => (
                 <IssueCard
+                  testId={`${testId}.issue-card${index}`}
                   key={issue._id.toString()}
                   issueNumber={issue.issueNumber}
                   title={issue.title}
@@ -127,14 +127,18 @@ const IssuesPage: React.FC = () => {
         <div className="issues-page-pagination-container">
           <div className="issues-page-pagination-controls">
             <Button
+              testId={`${testId}.previous-page-button`}
               icon={<ArrowLeftIcon className="h-5 w-5" />}
               backgroundColor="blue"
               type="icon"
               onClick={handlePreviousPage}
               isDisabled={currentPage === 1}
             />
-            <span>{`Page ${currentPage} of ${totalPages}`}</span>
+            <span
+              data-testid={`${testId}.pagination-text`}
+            >{`Page ${currentPage} of ${totalPages}`}</span>
             <Button
+              testId={`${testId}.next-page-button`}
               icon={<ArrowRightIcon className="h-5 w-5" />}
               backgroundColor="blue"
               type="icon"
@@ -145,6 +149,7 @@ const IssuesPage: React.FC = () => {
         </div>
       </div>
       <ConfirmationModal
+        testId={`${testId}.delete-modal`}
         isOpen={isModalDeleteOpen}
         onCancel={handleCloseModalDelete}
         onConfirm={handleConfirmDelete}
@@ -152,19 +157,21 @@ const IssuesPage: React.FC = () => {
         description={`Are you sure you want to delete this issue?`}
       />
       <FilterModal
+        testId={`${testId}.filter-modal`}
         isOpen={isModalFilterOpen}
         onClose={handleCloseModalFilter}
         onConfirm={handleApplyFilter}
-        onReset={handleResetFilter}
         filterSortBy={sortBy}
         filterOrder={order}
       />
       <CreateModal
+        testId={`${testId}.create-modal`}
         isOpen={isModalCreateOpen}
         onClose={handleCloseModalCreate}
         onCreate={handleCreateNewIssue}
       />
       <EditModal
+        testId={`${testId}.edit-modal`}
         isOpen={isModalEditOpen}
         issueId={selectedIssueId}
         onClose={handleCloseModalEdit}

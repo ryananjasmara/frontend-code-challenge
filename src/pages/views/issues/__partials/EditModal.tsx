@@ -2,7 +2,7 @@ import { Button, Datepicker, TextField } from '@/shared/components';
 import React, { Fragment } from 'react';
 import './EditModal.css';
 import { UpdateIssuePayload } from '@/services/types';
-import { useEditModalUtil } from '@/hooks/Issues/EditModal.util';
+import { useEditModalUtil } from '@/hooks/Issues';
 
 export interface Props {
   testId?: string;
