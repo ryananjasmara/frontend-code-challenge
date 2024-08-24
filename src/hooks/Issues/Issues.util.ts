@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { generateRandomImage, useDebounce } from '@/shared/utils';
+import { useDebounce } from '@/shared/utils';
 import {
   useCreateIssue,
   useDeleteIssue,
@@ -7,7 +7,7 @@ import {
   useUpdateIssue
 } from '@/services/queries';
 import { CreateIssuePayload, UpdateIssuePayload } from '@/services/types';
-import { IFilterData } from './__partials/FilterModal';
+import { IFilterData } from '@/pages/views/issues/__partials/FilterModal';
 
 export const useIssuePageUtil = () => {
   // keyword

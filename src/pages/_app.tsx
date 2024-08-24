@@ -2,7 +2,7 @@ import { AppProps } from 'next/app';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import React from 'react';
 import '../app/globals.css';
-import ToastProvider from '@/pages/contexts/Toast.context';
+import ToastProvider from '@/contexts/Toast.context';
 
 const queryClient = new QueryClient({
   defaultOptions: {

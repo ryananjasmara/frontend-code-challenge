@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Props } from './CreateModal';
+import { Props } from '@/pages/views/issues/__partials/CreateModal';
 import { generateRandomImage } from '@/shared/utils';
 
 export const useCreateModalUtil = (props: Props) => {

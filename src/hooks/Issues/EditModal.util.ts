@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Props } from './EditModal';
+import { Props } from '@/pages/views/issues/__partials/EditModal';
 import { useGetIssueDetail } from '@/services/queries';
 import { generateRandomImage } from '@/shared/utils';
 

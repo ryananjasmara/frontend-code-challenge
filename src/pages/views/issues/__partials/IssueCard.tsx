@@ -1,3 +1,4 @@
+import React from 'react';
 import { simpleDateFormat } from '@/shared/utils';
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/solid';
 import { Button } from '@/shared/components';
