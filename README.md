@@ -49,6 +49,11 @@ In creating this project, I used a document to help me track the tasks that I ne
 - `React Testing Library` : It encourages testing best practices by focusing on user interactions and rendering components in a way that resembles how they are used.
 - `MongoDB` : It offers a flexible schema design
 
+## Unit Test
+I have implemented unit tests for this project, focusing on components, utility functions, and the main pages.
+
+![image](https://github.com/user-attachments/assets/3e7251df-cd4c-499c-8d04-03816624653f)
+
 ## API Documentation
 
 ### GET /api/v1/issues
