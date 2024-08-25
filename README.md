@@ -49,8 +49,38 @@ In creating this project, I used a document to help me track the tasks that I ne
 - `React Testing Library` : It encourages testing best practices by focusing on user interactions and rendering components in a way that resembles how they are used.
 - `MongoDB` : It offers a flexible schema design
 
+## How to Install
+
+Follow these steps to set up the project locally:
+
+1. **Clone the repository:**
+```sh
+git clone git@github.com:ryansinbad/frontend-code-challenge.git
+cd frontend-code-challenge
+```
+
+2. **Install Dependencies**
+```sh
+npm install
+```
+
+3. **Setup Environment Variables**
+```sh
+cp .env.sample .env.local
+```
+
+4. **Run the development server:**
+```sh
+npm run dev
+```
+
 ## Unit Test
 I have implemented unit tests for this project, focusing on components, utility functions, and the main pages.
+
+**Run Test**
+```sh
+npm test
+```
 
 ![image](https://github.com/user-attachments/assets/3e7251df-cd4c-499c-8d04-03816624653f)
 
