@@ -1,7 +1,7 @@
 # frontend-code-challange
 This is a simple yet functional project built with Next.js, designed to demonstrate the core capabilities of CRUD operations (Create, Read, Update, Delete). The project showcases how to efficiently handle data management in a web application, leveraging Next.js for server-side rendering and seamless integration with backend services.
 
-[Live Site](https://frontendcodechallange-8f49986ae2a0.herokuapp.com/)
+[Live Site](https://frontendcodechallange.netlify.app/)
 
 In creating this project, I used a document to help me track the tasks that I needed to complete. You can find the task tracker [here](https://docs.google.com/spreadsheets/d/1RvZei1m_jt9VfnJrPhZrVHbc8vnFbmFfAFiGT9xhBcE/edit#gid=1386834576). Feel free to check it out and see the progress of the project.
 
